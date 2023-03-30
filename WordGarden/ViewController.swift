@@ -103,6 +103,44 @@ class ViewController: UIViewController {
     }
     
     
+    func drawFlowerAndPlaySound(currentLetterGuessed: String) {
+        if wordToGuess.contains(currentLetterGuessed) == false {
+            wrongGuessesRemaining -= 1
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                UIView.transition(with: self.flowerImageView,
+                                  duration: 0.5,
+                                  options: .transitionCrossDissolve,
+                                  animations: {self.flowerImageView.image = UIImage(named: "wilt\(self.wrongGuessesRemaining)")})
+                { (_) in
+                    
+                    // if we are not on the last flower
+                    // - show the next flower
+                    // otherwise (we're on flower 0)
+                    // - playSound("word-not-guessed")
+                    // - perform another UIView.transition to flower0
+                    
+                    if self.wrongGuessesRemaining != 0 {
+                        self.flowerImageView.image = UIImage(named: "flower\(self.wrongGuessesRemaining)")
+                    } else {
+                        self.playSound(name: "word-not=guessed")
+                        UIView.transition(with: self.flowerImageView,
+                                          duration: 0.5,
+                                          options: .transitionCrossDissolve,
+                                          animations: {self.flowerImageView.image = UIImage(named: "flower\(self.wrongGuessesRemaining)")}, completion: nil)
+                    }
+                    
+                    
+                }
+                
+                self.playSound(name: "incorrect")
+            }
+        } else {
+            playSound(name: "correct")
+        }
+    }
+    
+    
     func guessALetter() {
         // get current letter guessed and add it to all letter guessed
         let currentLetterGuessed = guessedLetterField.text!
@@ -112,13 +150,7 @@ class ViewController: UIViewController {
         formatRevealWord()
         
         // update image, if needed, and keep track of wrong guesses
-        if wordToGuess.contains(currentLetterGuessed) == false {
-            wrongGuessesRemaining -= 1
-            flowerImageView.image = UIImage(named: "flower\(wrongGuessesRemaining)")
-            playSound(name: "incorrect")
-        } else {
-            playSound(name: "correct")
-        }
+        drawFlowerAndPlaySound(currentLetterGuessed: currentLetterGuessed)
         
         // update gameStatusMessageLabel
         guessCount += 1
@@ -145,7 +177,6 @@ class ViewController: UIViewController {
         } else if wrongGuessesRemaining == 0 {
             gameStatusLabel.text = "So sorry, you're all out of guesses."
             wordMissedCount += 1
-            playSound(name: "word-not-guessed")
             updateAfterWinOrLose()
         }
         
