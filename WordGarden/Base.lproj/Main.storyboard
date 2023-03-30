@@ -77,7 +77,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_ _ _ _ _" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kyb-BJ-L6e">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kyb-BJ-L6e">
                                 <rect key="frame" x="16" y="131" width="343" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="clk-1V-MqQ"/>
@@ -96,7 +96,11 @@
                                             <constraint firstAttribute="height" constant="30" id="IR6-VF-2Ki"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                        <connections>
+                                            <action selector="doneKeyPressed:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="ImH-Bu-9r3"/>
+                                            <action selector="guessLetterFieldChanged:" destination="BYZ-38-t0r" eventType="editingChanged" id="k7U-ij-HXD"/>
+                                        </connections>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="naw-vu-7F4">
                                         <rect key="frame" x="69" y="0.0" width="150" height="30"/>
@@ -106,6 +110,9 @@
                                         </constraints>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Guess a Letter"/>
+                                        <connections>
+                                            <action selector="guessLetterButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="I61-qn-WSI"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -117,18 +124,18 @@
                                 </constraints>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Play Again!"/>
+                                <connections>
+                                    <action selector="playAgainButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8Fh-je-bnz"/>
+                                </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You've Made Zero Guesses" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IhC-gN-mTm">
-                                <rect key="frame" x="16" y="236" width="343" height="74"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="74" id="pHp-kx-EJh"/>
-                                </constraints>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You've Made Zero Guess" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IhC-gN-mTm">
+                                <rect key="frame" x="16" y="236" width="343" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="flower8" translatesAutoresizingMaskIntoConstraints="NO" id="FUq-cc-3t2">
-                                <rect key="frame" x="0.0" y="318" width="375" height="349"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="flower8" translatesAutoresizingMaskIntoConstraints="NO" id="FUq-cc-3t2">
+                                <rect key="frame" x="0.0" y="264.5" width="375" height="402.5"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -156,6 +163,18 @@
                             <constraint firstItem="V7W-rq-kzL" firstAttribute="top" secondItem="ANX-0x-0JK" secondAttribute="bottom" constant="8" id="ytt-Ts-3DQ"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="flowerImageView" destination="FUq-cc-3t2" id="jhR-I3-Aia"/>
+                        <outlet property="gameStatusLabel" destination="IhC-gN-mTm" id="Xew-fc-Aop"/>
+                        <outlet property="guessLetterButton" destination="naw-vu-7F4" id="W3D-iu-afH"/>
+                        <outlet property="guessedLetterField" destination="CSI-nh-ejc" id="Wj4-Ij-3fq"/>
+                        <outlet property="playAgainButton" destination="Ra4-lX-flb" id="6Xg-wA-Tbg"/>
+                        <outlet property="wordBeingRevealedLabel" destination="Kyb-BJ-L6e" id="x6E-Iu-mhI"/>
+                        <outlet property="wordGuessedLabel" destination="IEr-v9-EXa" id="XEO-jW-k2c"/>
+                        <outlet property="wordInGameLabel" destination="J9u-Iz-0UK" id="PmE-YJ-llb"/>
+                        <outlet property="wordMissedLabel" destination="ahz-gi-oYF" id="zN6-RM-b0U"/>
+                        <outlet property="wordRemainingLabel" destination="r9h-lF-hJR" id="8Eb-0V-Lqd"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
